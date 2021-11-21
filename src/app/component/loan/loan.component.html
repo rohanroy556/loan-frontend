@@ -1,0 +1,62 @@
+<div class="d-flex flex-column align-items-stretch m-3" *ngIf="partnerLimits$ | async as partnerLimits">
+    <select class="form-select" [(ngModel)]="partnerLimit" (change)="partnerChange()">
+        <option [ngValue]="null" selected>Select Partner</option>
+        <option *ngFor="let partnerLimit of partnerLimits" [ngValue]="partnerLimit">{{ partnerLimit.name }}
+        </option>
+    </select>
+    <form [formGroup]="loanForm" (ngSubmit)="submit()" *ngIf="partnerLimit" class="d-flex flex-column align-items-end m-3">
+        <div class="input-group mb-3">
+            <label for="amount" class="input-group-text">Amount &#8377;</label>
+            <input type="number" class="form-control text-end" placeholder="Amount" id="amount" formControlName="amount"
+                [ngClass]="{ 'is-invalid': hasError(amount) }" required>
+            <ng-container *ngTemplateOutlet="error; context: { control: amount, label: 'Amount' }"></ng-container>
+        </div>
+        <button type="submit" class="btn btn-primary w-25" [disabled]="!loanForm.valid">Apply</button>
+    </form>
+    <ng-template #error let-control="control" let-label="label">
+        <div class="invalid-feedback" *ngIf="hasError(control)">
+            <span *ngIf="control.errors.required">{{ label }} is required</span>
+            <span *ngIf="control.errors.min">{{ label }} has to be atleast &#8377;1</span>
+            <span *ngIf="control.errors.max">{{ label }} has exceeded the daily limit</span>
+        </div>
+    </ng-template>
+    <div class="card mb-3" *ngIf="partnerLimit">
+        <div class="card-header">Limit Left</div>
+        <div class="card-body card-group">
+            <div class="card">
+                <div class="card-header">Daily</div>
+                <div class="card-body">
+                    <div class="input-group col mb-3 p-0">
+                        <label for="amount" class="input-group-text">Amount</label>
+                        <input class="form-control text-end" id="amount"
+                            [ngClass]="getHighlightClass(partnerLimit.limitLeft.daily.amount)"
+                            [value]="partnerLimit.limitLeft.daily.amount | currency:'&#8377;'" readonly>
+                    </div>
+                    <div class="input-group col p-0">
+                        <label for="numberOfLoans" class="input-group-text">Number of Loans</label>
+                        <input class="form-control text-end" id="numberOfLoans"
+                            [ngClass]="getHighlightClass(partnerLimit.limitLeft.daily.numberOfLoans)"
+                            [value]="partnerLimit.limitLeft.daily.numberOfLoans" readonly #dailyNumberOfLoans>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">Monthly</div>
+                <div class="card-body">
+                    <div class="input-group col mb-3 p-0">
+                        <label for="amount" class="input-group-text">Amount</label>
+                        <input class="form-control text-end" id="amount"
+                            [ngClass]="getHighlightClass(partnerLimit.limitLeft.monthly.amount)"
+                            [value]="partnerLimit.limitLeft.monthly.amount | currency:'&#8377;'" readonly #monthlyAmount>
+                    </div>
+                    <div class="input-group col p-0">
+                        <label for="numberOfLoans" class="input-group-text">Number of Loans</label>
+                        <input class="form-control text-end" id="numberOfLoans"
+                            [ngClass]="getHighlightClass(partnerLimit.limitLeft.monthly.numberOfLoans)"
+                            [value]="partnerLimit.limitLeft.monthly.numberOfLoans" readonly #monthlyNumberOfLoans>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

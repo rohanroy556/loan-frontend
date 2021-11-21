@@ -1,0 +1,14 @@
+@import '~bootstrap/scss/bootstrap';
+
+::-webkit-scrollbar {
+    width: 0.5rem !important;
+    height: 0.2rem !important;
+}
+::-webkit-scrollbar-track {
+    background: #f1f1f1 !important;
+    border-radius: 2rem;
+}
+::-webkit-scrollbar-thumb {
+    background: #c4c4c4 !important;
+    border-radius: 2rem;
+}

@@ -1,0 +1,7 @@
+<ngb-toast *ngFor="let message of dialogService.messages" [ngClass]="[message.className, 'm-3']"
+    [autohide]="true" [delay]="5000" (hidden)="remove(message)">
+    <div class="d-flex align-items-center justify-content-between text-light">
+        <strong class="px-3">{{ message.text }}</strong>
+        <button class="btn text-light" (click)="remove(message)"><i class="fa fa-close"></i></button>
+    </div>
+</ngb-toast>

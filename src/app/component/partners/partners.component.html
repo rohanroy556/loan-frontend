@@ -1,0 +1,13 @@
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <button class="btn btn-primary" type="button" (click)="partnerModalOpen()">
+        <i class="fa fa-plus"></i>
+        <span>Add</span>
+    </button>
+</div>
+<div class="list-group p-3">
+    <div class="list-group-item list-group-item-action d-flex p-0" *ngFor="let partner of partners$ | async">
+        <a type="button" class="btn text-start flex-grow-1 p-3" [routerLink]="['/partner', partner._id]">{{ partner.name }}</a>
+        <button class="btn btn-success" (click)="partnerModalOpen(partner)"><i class="fa fa-edit"></i></button>
+        <button class="btn btn-danger" (click)="partnerDelete(partner)"><i class="fa fa-trash"></i></button>
+    </div>
+</div>

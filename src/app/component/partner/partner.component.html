@@ -1,0 +1,60 @@
+<div class="jumbotron jumbotron-fluid p-3" *ngIf="partner$ | async as partner">
+    <div class="container">
+        <h1 class="display-4">{{ partner.name }}</h1>
+        <div class="card mb-3">
+            <div class="card-header">Limit</div>
+            <div class="card-body card-group">
+                <div class="card">
+                    <div class="card-header">Daily</div>
+                    <div class="card-body">
+                        <div class="input-group col mb-3 p-0">
+                            <label for="amount" class="input-group-text">Amount</label>
+                            <input class="form-control text-end" id="amount"
+                                [value]="partner.limit.daily.amount | currency:'&#8377;'" readonly>
+                        </div>
+                        <div class="input-group col p-0">
+                            <label for="numberOfLoans" class="input-group-text">Number of Loans</label>
+                            <input class="form-control text-end" id="numberOfLoans"
+                                [value]="partner.limit.daily.numberOfLoans" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">Monthly</div>
+                    <div class="card-body">
+                        <div class="input-group col mb-3 p-0">
+                            <label for="amount" class="input-group-text">Amount</label>
+                            <input class="form-control text-end" id="amount"
+                                [value]="partner.limit.monthly.amount | currency:'&#8377;'" readonly>
+                        </div>
+                        <div class="input-group col p-0">
+                            <label for="numberOfLoans" class="input-group-text">Number of Loans</label>
+                            <input class="form-control text-end" id="numberOfLoans"
+                                [value]="partner.limit.monthly.numberOfLoans" readonly>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header d-flex align-items-center justify-content-between">
+                <span>Loans</span>
+                <a type="button" class="btn btn-primary px-3 w-25" [routerLink]="['/loan', partner._id]">Apply Loan</a>
+            </div>
+            <div class="card-body">
+                <div class="list-group-item list-group-item-action p-3" *ngFor="let loan of partner.loans">
+                    <div class="input-group col mb-3 p-0">
+                        <label for="amount" class="input-group-text">Amount</label>
+                        <input class="form-control text-end" id="amount"
+                            [value]="loan.amount | currency:'&#8377;'" readonly>
+                    </div>
+                    <div class="input-group col p-0">
+                        <label for="time" class="input-group-text">Time</label>
+                        <input class="form-control text-end" id="time"
+                            [value]="loan.time | date:'short'" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
